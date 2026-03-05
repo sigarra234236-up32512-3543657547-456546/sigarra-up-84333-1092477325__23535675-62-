@@ -1,0 +1,430 @@
+<table  class="formulario">
+<tr class="">
+<td class="formulario-legenda">
+Nome:
+</td>
+<td class="">
+Tiago António Fortunato Remígio Alves
+</td>
+<td>
+</td>
+</tr>
+<tr class="">
+<td class="formulario-legenda">
+Sexo:
+</td>
+<td class="">
+Masculino
+</td>
+<td>
+</td>
+</tr>
+<tr class="">
+<td class="formulario-legenda">
+Data de nascimento:
+</td>
+<td class="">
+2006-04-27
+</td>
+<td>
+</td>
+</tr>
+<tr class="">
+<td class="formulario-legenda">
+Estado civil:
+</td>
+<td class="">
+
+</td>
+<td>
+</td>
+</tr>
+<tr class="">
+<td class="formulario-legenda">
+Nome do pai:
+</td>
+<td class="">
+
+</td>
+<td>
+</td>
+</tr>
+<tr class="">
+<td class="formulario-legenda">
+Nome da mãe:
+</td>
+<td class="">
+
+</td>
+<td>
+</td>
+</tr>
+</table>
+<h3>Nacionalidades</h3>
+<table  class="formulario">
+<tr class="">
+<td class="formulario-legenda">
+1:
+</td>
+<td class="">
+portuguesa
+</td>
+<td>
+</td>
+</tr>
+</table>
+<script LANGUAGE="JavaScript" TYPE="text/javascript">
+<!--
+
+
+                var NUM_UNICO = "202407759";
+                // verifico e termino a propagação do evento onClick
+                // evitando que exista outro controlo sobre o evento click
+                // que não seja o atual.
+                $( "a" ).click(function( event ) {
+                    if (!$(this).parent().is( "li" )){
+                        if($(this).parent().prop("className") != "menu-contexto-principal"
+                        && $(this).parent().prop("className") != "estudante-lista-curso-detalhes"
+                        && $(this).parent().prop("className") != "estudante-info-numero"
+                        && $(this).parent().prop("className") == "info"
+                        ){
+                            event.preventDefault();
+                        }
+                    }
+                });
+
+                $("a img.editar, .novo-registo").on("click", function(_evento) {
+                    _evento.preventDefault();
+
+                    var $this = $(this);
+
+                    if (!$this.is("a")){
+                        $this = $this.closest("a");
+                        //carregar no lapis
+                    }
+                    $.ajax({
+                        url: $this.attr("href") + "&pv_num_unico=" + NUM_UNICO + "&pv_dummy=" + (new Date()).toISOString(),
+                        type: "GET",
+                        success: function(_resposta) {
+                            try {
+                                var resposta = (_resposta && $.parseJSON(_resposta)) || {"resultado": "sucesso", "dados_alterados": true};
+                            }
+                            catch(E) {
+                                var resposta = {"resultado": "sucesso", "dados_alterados": true};
+                            }
+                            if (resposta.resultado == "erro")
+                                window.alert(resposta.mensagem || mensagem_erro_geral);
+                            else {
+                                jQuery.facebox(_resposta);
+                                inicializaEditorDados();
+                            }
+                        }
+                    });
+            });
+
+        
+
+-->
+</script>
+<h3>Documentos de identificação</h3>
+<table  class="formulario">
+<tr class="">
+<td class="formulario-legenda">
+Cartão Cidadão:
+</td>
+<td class="">
+15368149 7ZX9 Portugal
+</td>
+<td>
+</td>
+</tr>
+<tr class="">
+<td class="formulario-legenda">
+Identificação Fiscal:
+</td>
+<td class="">
+257675434 Portugal
+</td>
+<td>
+</td>
+</tr>
+<tr class="">
+<td class="formulario-legenda">
+Segurança Social:
+</td>
+<td class="">
+12037657608 Portugal
+</td>
+<td>
+</td>
+</tr>
+</table>
+<h3>Contactos gerais</h3>
+<div class="info">
+Todos os contactos pela Universidade serão efetuados preferencialmente pelo endereço de email institucional.
+</div>
+<table  class="formulario">
+<tr class="">
+<td class="formulario-legenda">
+Telemóvel:
+</td>
+<td class="">
+<td>914857899 <img src="imagens/GENT-ContactoOK" alt="Contacto Confirmado"  title="Contacto Confirmado"   class="border0" width="10" height="10"></td>
+</td>
+<td>
+</td>
+</tr>
+<tr class="">
+<td class="formulario-legenda">
+E-mail:
+</td>
+<td class="">
+<td>tiago.alves@g9telecom.pt <img src="imagens/GENT-ContactoOK" alt="Contacto Confirmado"  title="Contacto Confirmado"   class="border0" width="10" height="10"></td>
+</td>
+<td>
+</td>
+</tr>
+</table>
+<h3>Moradas</h3>
+<table  class="formulario">
+<tr class="">
+<td class="formulario-legenda">
+Residência Oficial:
+</td>
+<td class="">
+Rua de Santa, N 21 - Paredes de Coura, Viana do Castelo
+<br />4940-571 PAREDES DE COURA
+<br />Portugal
+</td>
+<td>
+</td>
+</tr>
+<tr class="">
+<td class="formulario-legenda">
+Residência em tempo de aulas:
+</td>
+<td class="">
+Rua Barbosa du Bocage N.º 100, 3
+<br />4150-122 PORTO
+<br />União das Freguesias de Lordelo do Ouro e Massarelos
+<br />Portugal
+</td>
+<td>
+</td>
+</tr>
+</table>
+<script type="text/template" id="linha-mensagem">
+
+<tr>
+<td class="formulario-legenda sem-quebra">${autor}:</td>
+<td><div class="mansagem-${tipoautor}">${mensagem}</div><span class="data-hora">[${datahora}]</span></td>
+</tr>
+
+</script>
+<script type="text/template" id="janela-mensagens">
+
+<h2>Mensagens</h2>
+<form action="fest_geral.pedido_alt_mensagem_sub" method="POST">
+<input type="hidden" name="pv_pedido_id" value="${pedidoId}">
+<div class="caixa-mensagens-anteriores">
+<div class="info" style="display:none">Não existem mensagens</div>
+<table  class="mensagens-anteriores">
+</table>
+</div>
+<table  class="formulario">
+<tr>
+<td class="formulario-legenda sem-quebra">Tiago António Fortunato Remígio Alves:</td>
+<td>
+<textarea name="pv_mensagem" rows="5" cols="50"  maxlength="4000" data-fvld-max-length="4000" data-label-campo="de mensagem"></textarea>
+<p class="controla-caracts">
+Número de caracteres: <span class="carat-usados">0</span> de <span class="carat-disponiveis">1000</span><span class="carat-ultrapassado"></span>
+</p>
+</td>
+</tr>
+</table>
+<div class="formulario-botoes">
+<button>Enviar</button>
+</div>
+</form>
+
+</script>
+<script type="text/template" id="loading-box">
+
+<div class="loading-data" data-id="${id}"><img src="imagens/Processar" alt="Indica que o sistema está a processar alguma ação antes que o utilizador possa fazer alguma coisa"  title=""   class="border0"></div>
+
+</script>
+<script LANGUAGE="JavaScript" TYPE="text/javascript">
+<!--
+
+
+if (!window.festPaginas || !window.festPaginas["fest_geral.info_pessoal_view.eventosMensagensCarregados"]) {
+    window.festPaginas = $.extend(window.festPaginas, {
+        "fest_geral.info_pessoal_view.eventosMensagensCarregados": true
+    }, true);
+
+    function setLoading(uiReference) {
+        var loadId = uiReference.attr("id") || "id" + Math.floor(Math.random()*10000),
+            uiLoading;
+        $("body").append(processaTemplate($("#loading-box"), {
+            "id": loadId
+        }).trim());
+
+        uiLoading = $("*[data-id=" + loadId + "]");
+        uiLoading
+        .css({
+            "margin": 0,
+            "padding": 0,
+            "opacity": 0.5,
+            "position": "absolute",
+            "top": uiReference.offset().top,
+            "left": uiReference.offset().left,
+            "zIndex": 99999,
+            "width": uiReference.width(),
+            "height": uiReference.height()
+        })
+        .show();
+
+        return uiLoading;
+    }
+
+    function unsetLoading(uiLoading) {
+        uiLoading.remove();
+    }
+
+    $(document)
+    .on("click", "div.mensagens", function(_evento) {
+        _evento.preventDefault();
+        var $this = $(this),
+            refrescaDadosFunc = refrescaInfoPessoal,
+            pedidoId = $this.attr("data-id"),
+            uiTextAreaNovaMensagem;
+        $.facebox(processaTemplate($("#janela-mensagens"), {
+            pedidoId: pedidoId
+        }));
+
+        uiTextAreaNovaMensagem = $("#facebox textarea[name=pv_mensagem]");
+        controlaCaracts(uiTextAreaNovaMensagem);
+        uiTextAreaNovaMensagem.focus();
+
+
+        setTimeout(function() {
+            var $trTabela = $("#facebox table.mensagens-anteriores"),
+                uiLoadingBox;
+
+            uiLoadingBox = setLoading($trTabela.closest(".caixa-mensagens-anteriores"));
+
+            $.ajax({
+                url: "fest_geral.get_mensagens_pedido_json?pv_pedido_id=" + $this.attr("data-id") + "&pv_dummy=" + (new Date()).toISOString(),
+                success: function(_resposta) {
+                    unsetLoading(uiLoadingBox);
+                    var resposta = $.parseJSON(_resposta.trim());
+                    if (resposta.resultado == "erro") {
+                        window.alert(resposta.mensagem);
+                        $.facebox.close();
+                        if (resposta.dados_alterados)
+                            refrescaDadosFunc();
+                    }
+                    else {
+                        for (var i = 0; i < resposta.length; i++) {
+                            resposta[i].mensagem = resposta[i].mensagem.replace("\n", "<br />");
+                            $trTabela.append(processaTemplate($("#linha-mensagem"), resposta[i]));
+                        }
+                        $("#facebox .caixa-mensagens-anteriores").scrollTop($("#facebox .mensagens-anteriores").height());
+
+                        if ($("#facebox table.mensagens-anteriores tr").length == 0) {
+                            $("#facebox .caixa-mensagens-anteriores .info").show();
+                        }
+
+                        $("#facebox form").on("submit", function(_evento) {
+                            _evento.preventDefault();
+                            var $textarea = $(this).find("textarea[name=pv_mensagem]"),
+                                $form = $textarea.closest("form");
+
+                            if ($this.find("*[data-erro]").length > 0) {
+                                _evento.preventDefault();
+                                return;
+                            }
+
+                            $form.find("button").attr("disabled", "disabled");
+
+                            $.ajax({
+                                url: $form.attr("action"),
+                                type: "POST",
+                                data: $form.serialize(),
+                                dataType: "json",
+                                success: function(_response) {
+                                    refrescaDadosFunc(pedidoId, _response.dados.numMensagens);
+                                    $.facebox.close();
+                                }
+                            });
+                        });
+                    }
+                }
+            });
+        }, 50);
+    });
+}
+
+        
+
+-->
+</script>
+<script LANGUAGE="JavaScript" TYPE="text/javascript">
+<!--
+
+
+
+            function processaTemplate(template, valores) {
+                var resultado = template;
+                if (typeof resultado !== "string")
+                    resultado = template.html();
+                var tokens = Object.keys(valores);
+                var re;
+                for (var i = 0, tokensLen = tokens.length; i < tokensLen; i++) {
+                    re = new RegExp("\\${" + tokens[i] + "}", "g");
+                    resultado = resultado.replace(re, valores[tokens[i]]);
+                }
+                return resultado;
+            }
+        
+
+-->
+</script>
+<script LANGUAGE="JavaScript" TYPE="text/javascript">
+<!--
+
+
+function controlaCaracts(_$textarea) {
+    var $controlaCaracts = _$textarea.next(".controla-caracts"),
+        caractDisponiveis = parseInt($controlaCaracts.find(".carat-disponiveis").html()),
+        labelTitulo = _$textarea.attr("data-label-campo");
+    _$textarea
+    .on("keyup", function() {
+        var $this = $(this),
+            thisLen = $this.val().length;
+        $controlaCaracts.find(".carat-usados").html(thisLen);
+        if (thisLen > caractDisponiveis) {
+            $controlaCaracts.find(".carat-usados").addClass("aviso");
+            $controlaCaracts.find(".caract-ultrapassado").show().html("!");
+            $this.attr("data-erro", "erro");
+        }
+        else {
+            $controlaCaracts.find(".carat-usados").removeClass("aviso");
+            $controlaCaracts.find(".caract-ultrapassado").hide().html("");
+            $this.removeAttr("data-erro");
+        }
+    })
+    .closest("form")
+    .on("submit", function(_evento) {
+        if (_$textarea.val().length > caractDisponiveis) {
+            alert(processaTemplate(MENSAGEM_DEMASIADOS_CARACT, {
+                "campo_nome": labelTitulo
+            }));
+            _evento.preventDefault();
+        }
+    });
+}
+    
+
+-->
+</script>
